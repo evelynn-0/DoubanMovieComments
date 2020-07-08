@@ -1,17 +1,12 @@
-
-# 数据分析可视化
 import os
 import pandas as pd
 from pandas import DataFrame
 import re
-from pyecharts.charts import Line, Geo, Bar, Pie, Page
-from pyecharts.charts import ThemeRiver
-from snownlp import SnowNLP
+
 import jieba
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 
-fth = open('pyecharts_citys_supported.txt', 'r', encoding='utf-8').read() # pyecharts支持城市列表
 
 # 过滤字符串只保留中文
 def translate(str):
@@ -58,5 +53,5 @@ def word_cloud(csv_file, stopwords_path, pic_path):
     wc.to_file(pic_name)
 
 
-word_cloud("创造101", "stopwords.txt", "创1.jpg" )
+word_cloud("复仇者联盟", "stopwords.txt", "复仇者联盟.jpg" )
 
