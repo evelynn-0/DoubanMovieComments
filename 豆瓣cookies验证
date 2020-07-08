@@ -1,0 +1,12 @@
+##判断headers、cookies是否获取正确
+
+import requests
+
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'}
+cookies = {'cookie': 'bid=7ytCD8wkbUo; douban-fav-remind=1; ap_v=0,6.0; __utmc=30149280; __utmz=30149280.1594121821.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __yadk_uid=2ZhY7RCcxYtyJy32xRkLcggBLbn3JN4g; dbcl2="145370404:M7mRXki7biM"; ck=ZGkQ; push_noty_num=0; push_doumail_num=0; __utmv=30149280.14537; _vwo_uuid_v2=D72EA586A3C73268CA742CDE4C38BB9D0|8da28f05eef9b25aa4a49c77e6fa3a5d; __gads=ID=275fee885d4b52d4:T=1594121853:S=ALNI_MZ9MX_3x50M45Av-BQ7ZE1181vHgg; __utma=30149280.1222828422.1594121821.1594121821.1594125400.2; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1594125410%2C%22https%3A%2F%2Fmovie.douban.com%2Fsubject%2F34456006%2Fcomments%3Fstatus%3DP%22%5D; _pk_ses.100001.8cb4=*; __utmt=1; _pk_id.100001.8cb4=bbae96b7f993974d.1594121821.2.1594125594.1594121838.; __utmb=30149280.6.10.1594125400'}
+
+
+url = 'http://www.douban.com'
+r = requests.get(url, cookies = cookies, headers = headers)
+with open('douban_2.txt', 'wb+') as f:
+    f.write(r.content)
