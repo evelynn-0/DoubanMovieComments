@@ -12,9 +12,8 @@ movie_name = ""
 
 ## User-Agent和cookies需要改成自己网页上的
 def get_content(id, page):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'}
-    cookies = {'cookie':'bid=GWJv2UtXQBY; push_doumail_num=0; push_noty_num=0; __gads=ID=d14073f09446902e:T=1589377652:S=ALNI_MaD7MIL_iMi6IVkydtanUyWNcrjOQ; _vwo_uuid_v2=D051037EC1D1A268D0505E891E7805E23|e2d59fd6137bf398b2963877a78cb043; __utmv=30149280.14537; ll="118267"; __yadk_uid=uPa82kk8XZAZYUCHxGQ3cYrD7VYJ7Ftr; __utmc=30149280; dbcl2="145370404:AcAvBYH0Vps"; ck=OO95; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1589437223%2C%22https%3A%2F%2Faccounts.douban.com%2Fpassport%2Flogin%22%5D; _pk_id.100001.8cb4=7cb7d75a5f050009.1589424831.2.1589437223.1589427761.; _pk_ses.100001.8cb4=*; __utma=30149280.1817539741.1589363606.1589431065.1589437225.7; __utmz=30149280.1589437225.7.5.utmcsr=accounts.douban.com|utmccn=(referral)|utmcmd=referral|utmcct=/passport/login; __utmt=1; __utmb=30149280.2.10.1589437225'}
+    headers = {'User-Agent': '自己网页上的材料'}
+    cookies = {'cookie':'自己网页上的材料'}
     url = "https://movie.douban.com/subject/" + str(id) + "/comments?start=" + str(page * 20) + "&limit=20&sort=new_score&status=P"
     res = requests.get(url, headers=headers, cookies=cookies)
 
@@ -38,7 +37,7 @@ def get_content(id, page):
     x = etree.HTML(res.text)
     for i in range(1, 21):   # 每页20个评论用户
         name = x.xpath('//*[@id="comments"]/div[{}]/div[2]/h3/span[2]/a/text()'.format(i))
-        # in case 如果有的人没有评分，但是评论了，那么score解析出来是日期，而日期所在位置spen[3]为空
+        # 如果有的人没有评分，但是评论了，那么score解析出来是日期，而日期所在位置spen[3]为空
         score = x.xpath('//*[@id="comments"]/div[{}]/div[2]/h3/span[2]/span[2]/@title'.format(i))
         date = x.xpath('//*[@id="comments"]/div[{}]/div[2]/h3/span[2]/span[3]/@title'.format(i))
         m = '\d{4}-\d{2}-\d{2}'
@@ -64,7 +63,7 @@ def get_content(id, page):
 def main(ID, pages):
     global movie_name
     for i in tqdm(range(0, pages)):
-        get_content(ID, i)  # 第一个参数是豆瓣电影对应的id序号，第二个参数是想爬取的评论页数
+        get_content(ID, i)  # 豆瓣电影对应的id序号+想爬取的评论页数
         time.sleep(round(random.uniform(5, 7), 2))
     infos = {'name': name_list, 'content': content_list, 'score': score_list, 'date': date_list}
     data = pd.DataFrame(infos, columns=['name',  'content', 'score', 'date'])
@@ -72,4 +71,4 @@ def main(ID, pages):
 
 
 if __name__ == '__main__':
-    main(1401524, 25)  # 评论电影的ID号+要爬取的评论页面数。豆瓣只开放500条评论所以最大写到25.
+    main(1401524, 25)  # 评论电影的ID号（如1401524）+要爬取的评论页面数。豆瓣只开放500条评论所以最大写到25.
